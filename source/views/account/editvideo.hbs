@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="/stylesheets/upload_details.css">
+
+<div class="container upload-details">
+    <form action="/account/updatevideo" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <input type="text" value="{{video.video_id}}" name="videoid" style="display: none;">
+            <div class="form-group col-lg-5">
+                <label for="description">Thumbnail</label>
+                <img id="thumbnail-image" src="/uploads/thumbnails/{{video.thumbnail}}" alt=""
+                    style="height: 200px; width: 400px; object-fit: cover;">
+                <input type="file" id="image-input" accept="image/*" style="display: none;" name="thumbnail">
+            </div>
+            <input type="text" value="{{video.thumbnail}}" name="thumbnail" style="display: none;">
+            <div class="form-group col-lg-9">
+                <label for="title">Video Title</label>
+                <input type="text" class="form-control" placeholder="Title" id="video-title" name="title"
+                    value="{{video.title}}">
+            </div>
+            <div class="form-group col-lg-3">
+                <label for="privacy">Privacy Settings</label>
+                <select class="form-control" id="privacy" name="privacy">
+                    <option value="0">Public</option>
+                    <option value="1">Private</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="description">About</label>
+                <textarea rows="3" class="form-control" id="video-description" name="description"
+                    placeholder="Description">{{video.description}}</textarea>
+            </div>
+            <div class="form-group col-lg-12">
+                <label for="tag">Tag</label>
+                <div class="row container">
+                    {{#each tags}}
+                    <div class="form-check col-lg-4 col-md-6">
+                        <input class="form-check-input" type="checkbox" name="tag" value="{{id}}">
+                        <label class="form-check-label" for="gridCheck">
+                            {{name}}
+                        </label>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="text-right">
+                <button type="submit" id="submit" class="btn btn-primary">Save change</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/javascripts/account/editvideo.js"></script>
+<script>
+    const tagCheckboxes = document.querySelectorAll('input[name="tag"]');
+
+    tagCheckboxes.forEach((checkbox) => {
+        if (checkbox.value === "{{video.tag_id}}") {
+            checkbox.checked = true;
+        }
+    });
+</script>

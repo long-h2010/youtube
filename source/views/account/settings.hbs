@@ -1,0 +1,104 @@
+<link rel="stylesheet" href="/stylesheets/account/settings.css">
+
+<div class="row">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body account-settings">
+                <div class="user-profile">
+                    <form action="/account/settings" enctype="multipart/form-data" method="post">
+                        <div class="user-avatar">
+                            <img id="avatar-img" src="/uploads/avatars/{{user.avatar_path}}" alt="">
+                            <input type="file" id="image-input" accept="image/*" style="display: none;" name="avatar">
+                        </div>
+                        <h5 class="user-name">{{user.name}}</h5>
+                        <h6 class="user-email">{{user.email}}</h6>
+                        <h6 class="user-meta">{{user.meta}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 changecontent">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="row">
+                    <input type="text" value="{{user.avatar_path}}" name="avatar" style="display: none;">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h6 class="mb-3 text-primary">Thông tin người dùng</h6>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name"
+                                value="{{user.name}}">
+                        </div>
+                    </div>
+
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="meta">Meta</label>
+                            <input type="text" class="form-control" id="meta" placeholder="Enter meta" name="meta"
+                                value="{{user.meta}}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                            <button type="submit" id="submitSettings" class="btn btn-primary">Save change</button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+                <hr class="my-4" />
+
+                <form action="/account/changepassword" method="post">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <h6 class="mb-3 text-primary">Change password</h6>
+                        </div>
+                        <div class="row m-auto">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="oldpwd">Old Password</label>
+                                    <input type="password" class="form-control" id="old-pwd" name="oldpass" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="newpwd">New Password</label>
+                                    <input type="password" class="form-control" id="new-pwd" name="newpass" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmpwd">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirm-pwd" name="confirmpass" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2">Password requirements</p>
+                                <p class="small text-muted mb-2">To create a new password, you have to meet all of the
+                                    following requirements:</p>
+                                <ul class="small text-muted pl-4 mb-0">
+                                    <li>Minimum 8 character</li>
+                                    <li>At least one special character</li>
+                                    <li>At least one number</li>
+                                    <li>Can't be the same as a previous password</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="text-right">
+                                <button type="submit" id="submit" class="btn btn-primary">Save change</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/javascripts/account/settings.js"></script>

@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="/stylesheets/index.css">
+<script src="/javascripts/loadvideo.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        {{#each videos}}
+        <div class="video col-xl-4 col-md-6 col-sm-12 mb-3">
+            <div class="video-card">
+                <div class="video-card-image">
+                    <a class="play-icon" href="/watch?v={{video_id}}"><i class="fas fa-play-circle"></i></a>
+                    <img src="/uploads/thumbnails/{{thumbnail}}" alt="" loading="lazy">
+                    <div class="time">{{length}}</div>
+                </div>
+                <div class="video-card-body">
+                    <div class="video-title">
+                        <a href="/watch?v={{id}}">{{title}}</a>
+                    </div>
+                    <div class="video-page">
+                        <a class="text-danger" href="/channel/{{meta}}">
+                            <img src="/uploads/avatars/{{avatar_path}}" alt="">
+                            {{name}}
+                        </a>
+                    </div>
+                    <div class="video-view">
+                        {{readableNumber view_count}} views &nbsp;<i class="fas fa-calendar-alt"></i> {{dateAgo datebegin}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        <div class="loading">
+
+        </div>
+    </div>
+    
+    {{#if canBack}}
+        {{#if back}}
+            <a href="/" class="btn btn-success" >Pre Page</a>
+        {{else}}
+            <a href="/{{back}}" class="btn btn-success" >Pre Page</a>
+        {{/if}}
+    {{/if}}
+    <a href="/{{next}}" class="btn btn-success" style="display: none;">Next Page</a>
+
+</div>
+
+<script>
+    var numPage = 1
+    var urlGetNextListVideo = '/video/'
+    let loading = $(".loading")
+
+    function addLoadingGif(){
+        let html = `<img src="/images/loading.if" alt="">`
+        loading.append(html)
+    }
+
+    function removeLoadingGif(){
+        loading.html('')
+    }
+    
+    window.addEventListener("scroll", function(){
+        if (window.innerHeight + window.pageYOffset >= document.documentElement.offsetHeight - 100) {
+            numPage++
+            console.log("Curr num page: " + numPage)
+            
+            $.get(urlGetNextListVideo + numPage)
+                .done(function(data){
+                    $(".row").append(data)
+                })
+                .fail(function(err){
+                    console.log(err)
+                    addLoadingGif()
+                })
+        }
+    })
+</script>

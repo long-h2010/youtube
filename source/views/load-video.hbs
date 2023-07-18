@@ -1,0 +1,25 @@
+{{#each videos}}
+<div class="video col-xl-4 col-md-6 col-sm-12 mb-3">
+    <div class="video-card">
+        <div class="video-card-image">
+            <a class="play-icon" href="/watch?v={{video_id}}"><i class="fas fa-play-circle"></i></a>
+            <img src="/uploads/thumbnails/{{thumbnail}}" alt="" loading="lazy">
+            <div class="time">{{length}}</div>
+        </div>
+        <div class="video-card-body">
+            <div class="video-title">
+                <a href="/watch?v={{id}}">{{title}}</a>
+            </div>
+            <div class="video-page">
+                <a class="text-danger" href="/channel/{{meta}}">
+                    <img src="/uploads/avatars/{{avatar_path}}" alt="">
+                    <span>{{name}}</span>
+                </a>
+            </div>
+            <div class="video-view">
+                {{readableNumber view_count}} views &nbsp;<i class="fas fa-calendar-alt"></i> {{dateAgo datebegin}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}

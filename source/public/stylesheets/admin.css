@@ -1,0 +1,53 @@
+.row {
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+.side-bar {
+    height: calc(100vh - 65px);
+    background-color: #093c55;
+    font-size: large;
+}
+
+.side-bar li .nav-link {
+    margin: 5px;
+}
+
+.side-bar li .nav-link:hover {
+    background-color: #115d83;
+}
+
+hr {
+    width: 0px;
+    height: 0px;
+}
+
+#avatar {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+}
+
+i {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.active a {
+    color: #115d83;
+}
+
+.add-row {
+    float: right;
+}
+
+.avatar-user {
+    height: 56px;
+    width: 56px;
+    border-radius: 50%;
+}
+
+.table {
+    overflow: scroll;
+}

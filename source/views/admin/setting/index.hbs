@@ -1,0 +1,24 @@
+<div class="col-8" style="margin: auto;">
+    <h1>Cài đặt chung video</h1>
+    <form action="/admin/setting" method="post" class=" mt-4">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Kích thước video (MB):</label>
+            <input type="number" class="form-control" id="size-video" name="video-size" value="{{sizeAndTimeVideo.size}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Thời gian video (Phút):</label>
+            <input type="number" class="form-control" id="time-video" name="time-size" value="{{sizeAndTimeVideo.time}}">
+        </div>
+        <input type="submit" value="Lưu" class="btn btn-success">
+    </form>
+
+    {{!-- Alert message --}}
+    {{#if message}}
+        <div class="alert alert-{{statusMessage}} alert-dismissible fade show my-3" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {{/if}}
+</div>
+
+

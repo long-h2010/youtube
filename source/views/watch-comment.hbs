@@ -1,0 +1,11 @@
+{{#each comments}}
+{{!-- Comment card --}}
+<div class="d-flex mt-3">
+    <a href="/channel/{{meta}}"><img class="rounded-circle" src="/uploads/avatars/{{avatar_path}}" alt="UserAvatar" width="40px" height="40px"></a>
+    <div class="ml-2">
+        <a class="text-decoration-none text-dark font-weight-bold m-0" href="/channel/{{meta}}" title="{{name}}">{{name}}</a>
+        <span>{{dateAgo datebegin}}</span>
+        <div class="text-dark">{{content}}</div>
+    </div>
+</div>
+{{/each}}

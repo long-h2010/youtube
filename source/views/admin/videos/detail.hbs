@@ -1,0 +1,60 @@
+<div class="col-12">
+    <div class="h1">Duyệt video</div>
+    <div class="row">
+        <div class="col-6">
+            {{!-- Hiển thị video --}}
+            <div class="mt-3">
+                <video width="100%" controls autoplay>
+                    <source src="/Uploads/videos/{{video.path}}" type="video/mp4">
+
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="col-12 my-3">
+                <h4>Thumbnail</h4>
+                <img src="/Uploads/thumbnails/{{video.thumbnail}}" alt="" srcset="" width="100%">
+            </div>
+        </div>
+        <div class="col-6">
+            {{!-- Chi tiết về video --}}
+            <form action="/admin/videos/{{video.id}}/approved" method="get">
+                <table class="table table-striped">
+                    <tr>
+                        <th width="30%">Id</th>
+                        <td>{{video.id}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Tiêu đề video</th>
+                        <td>{{video.title}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Người đăng</th>
+                        <td>{{video.USERNAME}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Chuyên mục</th>
+                        <td>{{video.TAGNAME}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Mô tả video</th>
+                        <td>{{video.description}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Meta</th>
+                        <td>{{video.meta}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Ngày đăng tải</th>
+                        <td>{{displayDate video.datebegin}}</td>
+                    </tr>
+                    <tr>
+                        <th width="30%">Giờ đăng tải</th>
+                        <td>{{displayTime video.datebegin}}</td>
+                    </tr>
+                </table>
+                {{!-- Button duyệt video --}}
+                <input type="submit" class="btn btn-success" value="Duyệt video">
+           </form>
+        </div>
+    </div>
+</div>

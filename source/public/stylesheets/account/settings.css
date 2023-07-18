@@ -1,0 +1,58 @@
+.account-settings {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account-settings .user-profile {
+  text-align: center;
+  color: black;
+}
+
+.account-settings .user-profile .user-avatar {
+  margin-bottom: 1rem;
+}
+
+.account-settings .user-profile .user-avatar img {
+  width: 90px;
+  height: 90px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.account-settings .user-profile h5.user-name {
+  margin-bottom: 0.5rem;
+}
+
+.account-settings .user-profile h6.user-email {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.card {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  border: 0;
+  margin-bottom: 1rem;
+}
+
+form {
+  padding-left: 0 !important;
+}
+
+.form-control {
+  border: 1px solid #596280;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  font-size: .825rem;
+  color: #bcd0f7;
+}
+
+.changecontent {
+  padding-left: 5px;
+  padding-right: 10px;
+}

@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="/stylesheets/channel.css">
+<link rel="stylesheet" href="/stylesheets/index.css">
+
+<img class="channel-banner" alt="Banner" src="/images/banner.png">
+{{!-- Channel information --}}
+{{#with user}}
+<div class="d-flex align-items-center bg-white px-5 py-3">
+    {{!-- Channel avatar --}}
+    <img class="rounded-circle d-none d-md-block" src="/uploads/avatars/{{avatar_path}}" alt="UserAvatar" width="128px" height="128px">
+    {{!-- <div class="social hidden-xs">
+        Social &nbsp;
+        <a class="fb" href="#">Facebook</a>
+        <a class="tw" href="#">Twitter</a>
+        <a class="gp" href="#">Google</a>
+    </div> --}}
+    <div class="ml-4">
+        {{!-- Channel name --}}
+        <div class="h5 text-dark m-0">{{name}}</div>
+        {{!-- Channel meta --}}
+        <div class="font-weight-bold">{{meta}}</div>
+        {{!-- Channel subscriber count --}}
+        <div><b id="displaySubscribe" class="font-weight-normal">{{readableNumber subscriber_count}}</b> người đăng ký</div>
+    </div>
+    <div class="ml-auto">
+        {{#with ..}}
+            {{#if userlogin}}
+                {{#unless (eq userlogin.id user.id)}}
+                    {{#if subscribe_state}}
+                    <button id="btnSubscribe" data-state="{{subscribe_state}}" class="rounded-pill border-0 bg-light-gray text-dark px-2 h-30">Đã đăng ký</button>
+                    {{else}}
+                    <button id="btnSubscribe" data-state="{{subscribe_state}}" class="rounded-pill border-0 bg-dark text-light px-2 h-30">Đăng ký</button>
+                    {{/if}}
+                {{/unless}}
+            {{else}}
+                <button onclick="window.location.href = '/login';" class="rounded-pill border-0 bg-dark text-light px-2 h-30">Đăng ký</button>
+            {{/if}}
+        {{/with}}
+    </div>
+</div>
+{{/with}}
+
+<div class="channel-nav py-1">
+    <nav class="navbar navbar-expand navbar-light">
+        <ul class="navbar-nav">
+            <li id="videosNav" class="nav-item active">
+                <a class="nav-link" href="#">Videos <span class="sr-only">(current)</span></a>
+            </li>
+            <li id="playlistsNav" class="nav-item">
+                <a class="nav-link" href="#">Playlists</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div id="videosTab" class="container-fluid">
+    <div class="row">
+        {{#each videos}}
+        {{!-- Video card --}}
+        <div class="video col-xl-4 col-md-6 col-sm-12 mb-3">
+            <div class="video-card">
+                <div class="video-card-image">
+                    <a class="play-icon" href="/watch?v={{id}}"><i class="fas fa-play-circle"></i></a>
+                    <img class="img-fluid" src="/uploads/thumbnails/{{thumbnail}}" alt="">
+                    <div class="time">{{length}}</div>
+                </div>
+                <div class="video-card-body">
+                    <div class="video-title">
+                        <a href="/watch?v={{id}}" title="{{title}}">{{title}}</a>
+                    </div>
+                    <div class="video-view">
+                        {{readableNumber view_count}} views &nbsp;<i class="fas fa-calendar-alt"></i> {{dateAgo datebegin}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+<div id="playlistsTab" class="container-fluid" hidden="hidden">
+    <div class="row">
+        {{#each playlists}}
+        {{!-- Playlist card --}}
+        <div class="video col-xl-4 col-md-6 col-sm-12 mb-3">
+            <div class="video-card">
+                <div class="video-card-image">
+                    <a class="play-icon" href="/watch?v={{video_id}}&list={{id}}"><i class="fas fa-play-circle"></i></a>
+                    <img class="img-fluid" src="/uploads/thumbnails/{{#if thumbnail}}{{thumbnail}}{{else}}default.PNG{{/if}}" alt="Thumbnail">
+                    <span class="playlist-overlay">
+                        {{video_count}} <i class="fa-solid fa-list"></i>
+                    </span>
+                </div>
+                <div class="video-card-body">
+                    <div class="video-title">
+                        <a href="/watch?v={{video_id}}&list={{id}}" title="{{name}}">{{name}}</a>
+                    </div>
+                    <div class="video-view">
+                        <i class="fas fa-calendar-alt"></i> Cập nhật {{dateAgo dateedit}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+<script>
+    {{#if user}}const subscribeUserId = {{user.id}};{{/if}}
+</script>
+<script src="/javascripts/channel.js"></script>

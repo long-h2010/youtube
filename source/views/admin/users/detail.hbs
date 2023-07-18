@@ -1,0 +1,72 @@
+<div class="col-8" style="margin: auto;">
+    <h1>Chi tiết thông tin User</h1>
+
+    <table class="table table-striped">
+        <tr>
+            <th width="30%">Id</th>
+            <td>{{user.id}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Tên</th>
+            <td>{{user.name}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Ảnh đại diện</th>
+            <td><img src="/Uploads/Avatars/{{user.avatar_path}}" alt="avatar-user" class="avatar-user" style="width: 80px; height: 80px;"></td>
+        </tr>
+        <tr>
+            <th width="30%">Email</th>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Meta</th>
+            <td>{{user.meta}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Order</th>
+            <td>{{user.order}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Ngày tạo tài khoản</th>
+            <td>{{displayDate user.datebegin}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Trạng thái</th>
+            <td>{{user.status}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Số lượng video</th>
+            <td>{{readableNumber user.NUM_VIDEO}}</td>
+        </tr>
+        <tr>
+            <th width="30%">Số lượng view</th>
+            <td>
+                {{#if user.TOTAL_VIEW}}
+                    {{readableNumber user.TOTAL_VIEW}}
+                {{else}}
+                    0
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <th width="30%">Số lượng like</th>
+            <td>
+                {{#if user.TOTAL_LIKE}}
+                    {{readableNumber user.TOTAL_LIKE}}
+                {{else}}
+                    0
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <th width="30%">Số lượng bình luận</th>
+            <td>
+                {{#if user.TOTAL_COMMENT}}
+                    {{readableNumber user.TOTAL_COMMENT}}
+                {{else}}
+                    0
+                {{/if}}
+            </td>
+        </tr>
+    </table>
+</div>

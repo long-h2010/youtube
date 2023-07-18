@@ -1,0 +1,44 @@
+.thumbnail {
+    height: 94px;
+}
+
+.title {
+    color: #000;
+    font-weight: 600;
+}
+
+.size {
+    font-size: 11px;
+}
+
+.progressbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress {
+    justify-content: space-between;
+    border-radius: 2px;
+    height: 12px;
+    width: 90%;
+    margin: 14px 0;
+}
+
+.progress-button {
+    display: flex;
+    height: 20px;
+    width: 20px;
+    margin: auto;
+    justify-content: space-evenly;
+}
+
+.progress-button button {
+    border: none;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.desc {
+    font-size: 12px;
+    opacity: 0.7;
+}

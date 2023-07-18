@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="/stylesheets/account/subscriptions.css">
+
+<div class="row">
+    {{#each users}}
+    <div class="col-xl-3 col-sm-6 mb-3">
+        <div class="channels-card">
+            <div class="channels-card-image">
+                <a href="/channel/{{meta}}"><img class="img-fluid" src="/uploads/avatars/{{avatar_path}}" alt=""></a>
+                <div class="channels-card-image-btn">
+                    <button onclick="window.location.href = '/channel/{{meta}}';" type="button" class="btn btn-outline-danger btn-sm">
+                        <span>Đã đăng ký </span>
+                        <i class="fa-solid fa-check"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="channels-card-body">
+                <div class="channels-title">
+                    <a href="/channel/{{meta}}">{{name}}</a>
+                </div>
+                {{!-- <div class="channels-view">
+                    videos
+                </div> --}}
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script src="/javascripts/account/subscriptions.js"></script>

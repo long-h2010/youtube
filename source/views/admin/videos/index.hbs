@@ -1,0 +1,284 @@
+<div class="col-md-12" style="margin: auto;">
+    <div class="col-12">
+        <h1>Video</h1>  
+    </div>
+
+    <div class="col-12">
+        <div class="search add-row mx-3">
+            <div class="input-group mb-3">
+                <input type="text" id="inputSearch" onkeyup="mySearch()" class="form-control" placeholder="Enter keys..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </div>
+        {{!-- Alert message --}}
+        {{#if message}}
+            <div class="alert alert-{{status}} alert-dismissible fade show col-4" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {{/if}}
+    </div>
+
+    <div style="overflow: scroll; width: 100%; height: 70vh; position: sticky;">
+        <table id="myTable" class="table table-striped" >
+            <thead style="position: sticky;">
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Người đăng</th>
+                    <th scope="col">Chuyên mục</th>
+                    <th scope="col">Ngày đăng</th>
+                    <th scope="col">Thời gian đăng</th>
+                    <th scope="col">Feature</th>
+                    <th scope="col">Block</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each videos}}
+                    <tr>
+                        <th scope="row">{{inc @index}}</th>
+                        <td>{{this.title}}</td>
+                        <td>{{this.user_name}}</td>
+                        <td>{{this.TAGNAME}}</td>
+                        <td>{{displayDate this.datebegin}}</td>
+                        <td>{{displayTime this.datebegin}}</td>
+                        <td>
+                            {{#if this._feature}}
+                                <a href="" class="btn btn-info btn-feature" data-id="{{this.id}}" data-toggle="modal" data-target="#featureModal"><i class="fa-regular fa-circle-xmark"></i></a>
+                            {{else}}
+                                <a href="" class="btn btn-primary btn-unfeature" data-id="{{this.id}}" data-toggle="modal" data-target="#unfeatureModal"><i class="fa-solid fa-circle-check"></i></a>
+                            {{/if}}
+                        </td>
+                        <td style="text-align: center;">
+                            {{#if this._hide}}
+                                <a href="#" class="btn btn-warning btn-mblock" data-id="{{this.id}}" data-toggle="modal" data-target="#blockModal"><i class="fa-solid fa-lock-open"></i></a>`
+                            {{/if}}
+                            {{#unless this._hide}}
+                                <a href="#" class="btn btn-success btn-munblock" data-id="{{this.id}}" data-toggle="modal" data-target="#unblockModal"><i class="fa-solid fa-lock"></i></a>`
+                            {{/unless}}
+                        </td>
+                        <td style=" text-align: center;">
+                            <a href="#" class="btn btn-danger btn-delete" data-id="{{this.id}}" data-toggle="modal" data-target="#deleteModal"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{!-- Delete Modal --}}
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Xóa video</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Bạn muốn xóa video <strong class="delete-name"></strong> không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-danger btn-confirm-delete">Xóa</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Block Modal --}}
+<div class="modal fade" id="blockModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Khóa video</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Bạn muốn khóa video <strong class="block-video-name"></strong> không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-danger btn-confirm-block">Khóa</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Unblock Modal --}}
+<div class="modal fade" id="unblockModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Mở khóa video</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Bạn muốn mở khóa video <strong class="unblock-video-name"></strong> không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-success btn-confirm-unblock">Mở khóa</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Feature Modal --}}
+<div class="modal fade" id="featureModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Thiết lập feature video</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Bạn muốn đặt video <strong class="feature-video-name"></strong> làm feature không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-success btn-confirm-feature">Xác nhận</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Unfeature Modal --}}
+<div class="modal fade" id="unfeatureModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Hủy thiết lập feature video</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Bạn muốn hủy video <strong class="unfeature-video-name"></strong> làm feature không?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-success btn-confirm-unfeature">Xác nhận</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    console.log("Quan ly video")
+
+    let _form = document.createElement("form")
+
+    let nameVideoDelete = $(".delete-name")
+    let nameVideoBlock = $(".block-video-name")
+    let nameVideoUnblock = $(".unblock-video-name")
+    let nameVideoFeature = $(".feature-video-name")
+    let nameVideoUnfeature = $(".unfeature-video-name")
+
+    $(document.body).append(_form);
+
+    $(".btn-delete").click(function(){
+        var del_id = $(this).attr("data-id")
+        //console.log("del video id: " + del_id)
+
+        // Get name delete
+        var name = $(this).parent().parent().children()[1].innerText
+
+        //console.log(name)
+
+        let path = `/admin/videos/${del_id}/delete`
+
+        _form.setAttribute("method", "GET")
+        _form.setAttribute("action", path)
+
+        nameVideoDelete.html(name)
+ 
+        $(".btn-confirm-delete").click(function(){
+            _form.submit()
+        })
+    })
+
+    $(".btn-mblock").click(function(){
+        var blockVideoId = $(this).attr("data-id")
+        console.log("del video id: " + blockVideoId)
+
+        // Get name delete
+        var name = $(this).parent().parent().children()[1].innerText
+
+        console.log(name)
+
+        let path = `/admin/videos/${blockVideoId}/block`
+
+        _form.setAttribute("method", "GET")
+        _form.setAttribute("action", path)
+
+        nameVideoBlock.html(name)
+ 
+        $(".btn-confirm-block").click(function(){
+            _form.submit()
+        })
+    })
+
+    $(".btn-munblock").click(function(){
+        var unblockVideoId = $(this).attr("data-id")
+        //console.log("del video id: " + unblockVideoId)
+
+        // Get name delete
+        var name = $(this).parent().parent().children()[1].innerText
+
+        console.log(name)
+
+        let path = `/admin/videos/${unblockVideoId}/unblock`
+
+        _form.setAttribute("method", "GET")
+        _form.setAttribute("action", path)
+
+        nameVideoUnblock.html(name)
+ 
+        $(".btn-confirm-unblock").click(function(){
+            _form.submit()
+        })
+    })
+
+    $(".btn-feature").click(function(){
+        var featureVideoId = $(this).attr("data-id")
+
+        // Get name delete
+        var name = $(this).parent().parent().children()[1].innerText
+
+        console.log(name)
+
+        let path = `/admin/videos/${featureVideoId}/feature`
+
+        _form.setAttribute("method", "GET")
+        _form.setAttribute("action", path)
+
+        nameVideoFeature.html(name)
+ 
+        $(".btn-confirm-feature").click(function(){
+            _form.submit()
+        })
+    })
+
+    $(".btn-unfeature").click(function(){
+        var unfeatureVideoId = $(this).attr("data-id")
+
+        // Get name delete
+        var name = $(this).parent().parent().children()[1].innerText
+
+        console.log(name)
+
+        let path = `/admin/videos/${unfeatureVideoId}/unfeature`
+
+        _form.setAttribute("method", "GET")
+        _form.setAttribute("action", path)
+
+        nameVideoUnfeature.html(name)
+ 
+        $(".btn-confirm-unfeature").click(function(){
+            _form.submit()
+        })
+    })
+
+</script>

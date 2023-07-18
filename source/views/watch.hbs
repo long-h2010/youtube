@@ -1,0 +1,248 @@
+<link rel="stylesheet" href="/stylesheets/watch.css">
+
+<div class="container-fluid">   
+    <div class="row">
+        {{!-- Current video, playlist and comments (Left part) --}}
+        <div class="col-12 col-md-7">
+            {{!-- Video player --}}
+            <div class="mt-3">
+                <video class="w-100" controls autoplay>
+                    <source src="/uploads/videos/{{video.path}}" type="video/mp4">
+
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            {{!-- Playlist container--}}
+            {{#each playlist}}
+            <div class="border rounded w-100 pb-1 mt-3">
+                {{!-- Playlist Info --}}
+                <div class="m-2">
+                    <div class="text-dark font-weight-bold">{{name}}</div>
+                    <div><a class="text-decoration-none text-dark" href="/channel/{{meta}}">{{user_name}}</a> - {{video_count}} videos</div>
+                </div>
+                {{!-- Playlist videos --}}
+                <div class="scroll-bar w-100">
+                    {{#each ../playlistcontents}}
+                    {{!-- Playlist video card --}}
+                    <a class="d-flex {{#if (eq video_id ../../curr_video_id)}}bg-light-brown{{else}}bg-light{{/if}} text-decoration-none text-dark w-100 py-2" href="/watch?v={{video_id}}&list={{playlist_id}}">
+                        {{!-- User index or icon if is current video --}}
+                        <div class="d-flex align-items-center ml-1">
+                            <div class="w-10">
+                                {{#if (eq video_id ../../curr_video_id)}}
+                                <i class="fa-solid fa-play"></i>
+                                {{else}}
+                                {{inc @index}}
+                                {{/if}}
+                            </div>
+                        </div>
+                        {{!-- Video thumbnail and length --}}
+                        <div class="position-relative ml-1">
+                            <img class="rounded" src="/uploads/thumbnails/{{thumbnail}}" alt="Thumbnail" width="100px" height="60px">
+                            <div class="time">{{length}}</div>
+                        </div>
+                        {{!-- Video title and user --}}
+                        <div class="ml-1">
+                            <div class="overflow-ellipsis-2 font-weight-bold">{{title}}</div>
+                            <div class="overflow-ellipsis-1">{{name}}</div>
+                        </div>
+                    </a>
+                    {{/each}}
+                </div>
+            </div>
+            {{/each}}
+
+            {{!-- Channel / Video Info --}}
+            {{#with video}}
+            <div class="mt-3">
+                {{!-- Video title --}}
+                <div class="overflow-ellipsis-2 video-title">{{title}}</div>
+
+                {{!-- Channel, like, subscribe button --}}
+                <div class="d-flex mt-2"> 
+                    <a href="/channel/{{meta}}"><img class="rounded-circle" src="/uploads/avatars/{{avatar_path}}" alt="useravatar" width="40px" height="40px"></a>
+                    <div class="ml-2">
+                        <a class="text-decoration-none text-dark h6 m-0" href="/channel/{{meta}}" title="{{name}}">{{name}}</a>
+                        <div><span id="displaySubscribe">{{readableNumber subscriber_count}}</span> người đăng ký</div>
+                    </div>
+                    {{!-- Subscribe button --}}
+                    <div class="d-flex align-items-center ml-4">
+                        {{#with ..}}
+                            {{#if userlogin}}
+                                {{#unless (eq userlogin.id video.user_id)}}
+                                    {{#if subscribe_state}}
+                                    <button id="btnSubscribe" data-state="{{subscribe_state}}" class="rounded-pill border-0 bg-light-gray text-dark px-2 h-30">Đã đăng ký</button>
+                                    {{else}}
+                                    <button id="btnSubscribe" data-state="{{subscribe_state}}" class="rounded-pill border-0 bg-dark text-light px-2 h-30">Đăng ký</button>
+                                    {{/if}}
+                                {{/unless}}
+                            {{else}}
+                                <button onclick="window.location.href = '/login';" class="rounded-pill border-0 bg-dark text-light px-2 h-30">Đăng ký</button>
+                            {{/if}}
+                        {{/with}}
+                    </div>
+                    {{!-- Like button --}}
+                    <div class="d-flex align-items-center ml-auto">
+                        {{#if ../userlogin}}
+                        <button id="btnLike" data-state="{{../like_state}}" class="rounded-pill border-0 bg-light-gray px-2 h-30">
+                            <i class="fa-regular fa-thumbs-up {{#if ../like_state}}fa-solid{{/if}}"></i>
+                            <span>{{readableNumber like_count}}</span>
+                        </button>
+                        {{else}}
+                        <button onclick="window.location.href = '/login';" class="rounded-pill border-0 bg-light-gray px-2 h-30">
+                            <i class="fa-regular fa-thumbs-up"></i>
+                            <span>{{readableNumber like_count}}</span>
+                        </button>
+                        {{/if}}
+                    </div>
+                    {{!-- Add playlist button --}}
+                    <div class="d-flex align-items-center ml-2">
+                        <button {{#if ../userlogin}}onclick="showAddToPlaylistModal();"{{else}}onclick="window.location.href = '/login';
+"{{/if}} class="rounded-pill border-0 bg-light-gray px-2 h-30">
+                            <i class="fa-solid fa-list"></i>
+                            <span>Lưu</span>
+                        </button>
+                    </div>
+                </div>
+                
+                {{!-- Video description --}}
+                <div id="description" class="description rounded-lg bg-light-gray p-2 mt-2">
+                    <div class="text-dark font-weight-bold">{{readableNumber view_count}} lượt xem {{dateAgo datebegin}} #{{tag_name}}</div>
+                    <div>
+                        {{description}}
+                    </div>
+                </div>
+            </div>
+
+            {{!-- Comment --}}
+            <div class="mt-4">
+                <div class="text-dark h6"><span id="displayComment">{{displayNumber comment_count}}</span> bình luận</div>
+            {{/with}}
+                {{!-- Comment input --}}
+                <div class="d-flex mt-4">
+                    <img class="rounded-circle" src="/uploads/avatars/{{#if userlogin}}{{userlogin.avatar_path}}{{else}}default.png{{/if}}" alt="UserAvatar" width="40px" height="40px">
+                    <div class="flex-fill ml-2">
+                        <textarea {{#if userlogin}}id="comment"{{else}}onclick="window.location.href = '/login';"{{/if}} class="input" type="text" name="comment" placeholder="Viết bình luận..."></textarea>
+                        <button id="btnComment" class="float-right rounded-pill border-0 bg-gray text-white px-2 h-30" disabled>Bình luận</button>
+                    </div>
+                </div>
+                {{!-- List of comment --}}
+                <div id="commentList">
+                    {{#each comments}}
+                    {{!-- Comment card --}}
+                    <div class="d-flex mt-3">
+                        <a href="/channel/{{meta}}"><img class="rounded-circle" src="/uploads/avatars/{{avatar_path}}" alt="UserAvatar" width="40px" height="40px"></a>
+                        <div class="ml-2">
+                            <a class="text-decoration-none text-dark font-weight-bold m-0" href="/channel/{{meta}}" title="{{name}}">{{name}}</a>
+                            <span>{{dateAgo datebegin}}</span>
+                            <div class="text-dark">{{content}}</div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                <button id="btnMoreComment" class="rounded-pill border-secondary bg-white text-primary px-2 w-100 h-30 mt-3">Show more</button>
+            </div>
+        </div>
+
+        {{!-- List of videos (Right part) --}}
+        <div class="col-12 col-md-5">
+
+            {{!-- Video list --}}
+            <div id="videoList" class="mt-3">
+                {{#each videos}}
+                {{!-- Video card --}}
+                <div class="d-flex mt-3">
+                    {{!-- Video thumbnail --}}
+                    <div class="video-card-image">
+                        <a class="play-icon" href="/watch?v={{id}}"><i class="fa fa-play-circle"></i></a>
+                        <a href="/watch?v={{id}}"><img class="border-radius-2" src="/uploads/thumbnails/{{thumbnail}}" alt="" width="120px" height="70px"></a>
+                        <div class="time">{{length}}</div>
+                    </div>
+                    <div class="ml-1">
+                        {{!-- Video title --}}
+                        <a class="overflow-ellipsis-2 text-decoration-none text-dark font-weight-bold" href="/watch?v={{id}}" title="{{title}}">{{title}}</a>
+                        {{!-- Channel name --}}
+                        <a class="overflow-ellipsis-1 text-decoration-none text-danger" href="/channel/{{meta}}" title="{{name}}">{{name}}</a>
+                        {{!-- View and upload date --}}
+                        <div class="overflow-ellipsis-1">{{readableNumber view_count}} lượt xem &nbsp;<i class="fas fa-calendar-alt"></i> {{dateAgo datebegin}}</div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+
+        </div>
+    
+    </div>
+</div>
+
+{{!-- Add to playlist modal --}}
+<div id="modalBackground" class="modal-background">
+    <div class="text-dark modal-content">
+        {{!-- Modal title --}}
+        <div class="d-flex px-3 py-2">
+            <div>Lưu vào... </div>
+            <div class="ml-auto"><i onclick="hideAddToPlaylistModal();" class="cursor-pointer fa-solid fa-close"></i></div>
+        </div>
+        {{!-- Playlist list --}}
+        <div class="scroll-bar px-3">
+            {{#each playlists}}
+            {{!-- Playlist card --}}
+            <div class="d-flex mb-2">
+                {{!-- Playlist name --}}
+                <div class="d-flex align-items-center overflow-ellipsis-1 mr-2">
+                    <input onclick="addVideoToPlaylist(event, {{id}}, '{{name}}');" class="mr-2" {{#if video_id}}checked{{/if}} type="checkbox"> {{name}}
+                </div>
+                {{!-- Playlist privacy --}}
+                <div class="ml-auto">
+                    <i class="fa-solid fa-{{#if (checkBuffer privacy)}}lock{{else}}globe{{/if}}"></i>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{!-- Add new playlist --}}
+        <div id="btnShowAddPlaylistForm" onclick="showAddPlaylistForm();" class="rounded cursor-pointer w-100 px-3 py-2">
+            <i class="fa-solid fa-plus"></i> Tạo danh sách phát mới
+        </div>
+        <div id="addPlaylistForm" class="w-100 px-3 py-2 d-none">
+            {{!-- New playlist name --}}
+            <div class="mb-3">
+                <div>Tên</div>
+                <input id="addPlaylistName" class="input m-0" placeholder="Nhập tên danh sách phát..." maxlength="100" required type="text">
+                <div class="d-flex">
+                    {{!-- Error message --}}
+                    <div id="inputError" class="d-none">
+                        Bắt buộc
+                    </div>
+                    {{!-- Character counter --}}
+                    <div class="ml-auto">
+                        <span id="inputCounter">0</span>/100
+                    </div>
+                </div>
+            </div>
+            {{!-- New playlist privacy --}}
+            <div class="mb-3">
+                <div>Quyền riêng tư</div>
+                <select id="addPlaylistPrivacy" class="form-select w-100">
+                    <option value="0" selected>Công khai</option>
+                    <option value="1">Riêng tư</option>
+                </select>
+            </div>
+            {{!-- Button create new playlist --}}
+            <div class="d-flex w-100">
+                <button id="btnAddPlaylist" class="btn rounded-pill btn-outline-primary px-2 py-0 ml-auto" disabled>Tạo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast">
+    Đã thêm vào
+    Đã xóa khỏi
+</div>
+
+{{!-- Move to script later --}}
+<script>
+    {{#if video}}const videoId = {{video.id}};{{/if}}
+    {{#if video}}const subscribeUserId = {{video.user_id}};{{/if}}
+</script>
+<script src="/javascripts/watch.js"></script>

@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/stylesheets/search.css">
+
+<div class="container">
+    {{#each videos}}
+    <div class="d-flex mt-3">
+        <div class="video-card-image col-4 p-0">
+            <a class="play-icon" href="/watch?v={{video_id}}"><i class="fa fa-play-circle"></i></a>
+            <img class="border-radius-2" src="/uploads/thumbnails/{{thumbnail}}" alt="" width="100%" height="160px">
+            <div class="time">{{length}}</div>
+        </div>
+        <div class="video-card-infor col-7">
+            <a class="overflow-ellipsis-2 text-decoration-none text-dark font-weight-bold" href="/watch?v={{video_id}}" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit."><h5>{{title}}</h5></a>
+            <div class="overflow-ellipsis-1">
+                {{readableNumber view_count}}
+                <i class="fas fa-calendar-alt"></i> {{dateAgo datebegin}}
+            </div>
+            <div class="video-card-infor-user d-flex my-2">
+                <a href="/channel/{{meta}}"><img class="rounded-circle" src="/uploads/avatars/{{avatar_path}}" alt="useravatar"></a>
+                <a class="overflow-ellipsis-1 text-decoration-none text-danger ml-2" href="/channel/{{meta}}" title="">{{name}}</a>
+            </div>
+            <div class="overflow-ellipsis-1">{{description}}</div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.sidebar #home').removeClass('active');
+        $('#{{nav_id}}').addClass('active');
+    });
+</script>

@@ -1,0 +1,29 @@
+<style>
+    .requestlogin {
+        text-align: center;
+        margin-top: 200px;
+    }
+
+    .requestlogin i {
+        font-size: 100px;
+        margin-bottom: 50px;
+    }
+
+    .requestlogin a:hover {
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+
+<section class="requestlogin">
+    <i class="fa-solid fa-right-to-bracket fa-beat-fade"></i>
+    <h1>Bạn cần <a href="/login">đăng nhập</a> để sử dụng chức năng này!</h1>
+</section>
+
+<script>
+    $(document).ready(function() {
+        $('.sidebar #home').removeClass('active');
+        $('#{{nav_id}}').addClass('active'); 
+        e.preventDefault();
+    });
+</script>

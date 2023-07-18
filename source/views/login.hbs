@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="/stylesheets/login.css">
+
+{{#if message}}
+<div id="flash-alert" class="alert alert-{{type}} text-center w-25 mx-auto my-3">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <span><strong>{{message}}</strong></span>
+</div>
+{{/if}}
+
+<div id="main" class="container">
+    <section class="sign-in">
+        <form action="/login" method="post">
+            <h1>Login</h1>
+            <label for="">
+                <i class="fa-solid fa-user"></i>
+                <input type="email" name="email" placeholder="Email" required="">
+            </label>
+            <label for="">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" name="password" placeholder="Password" required="">
+            </label>
+            <label for="rememberme" class="remember-forgot">
+                <input type="checkbox" name="rememberme" id="rememberme">
+                Remember me
+            </label>
+            {{!-- <p>or login with social media</p>
+            <div class="social-container">
+                <a class="social" href=""><i class="fa-brands fa-facebook"></i></a>
+                <a class="social" href=""><i class="fa-brands fa-twitter"></i></a>
+                <a class="social" href=""><i class="fa-brands fa-google"></i></a>
+            </div> --}}
+            <button type="submit">Sign in</button>
+        </form>
+    </section>
+    
+    <section class="sign-up">
+        <form action="/register" method="post">
+            <h1>Register</h1>
+            <label for="">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" required="">
+            </label>
+            <label for="">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" name="name" placeholder="Name" required=""> 
+            </label>
+            <label for="">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" name="password" placeholder="Password" required="">
+            </label>
+            <label for="">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" name="comfirm_password" placeholder="Comfirm password" required="">
+            </label>
+            <button type="submit">Sign up</button>
+        </form>
+    </section>
+
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-left">
+                <h1>Đã có tài khoản?</h1>
+                <button id="btn-signin">Sign in</button>
+            </div>
+
+            <div class="overlay-right">
+                <h1>Chưa có tài khoản?</h1>
+                <button id="btn-signup">Sign up</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/javascripts/login.js"></script>

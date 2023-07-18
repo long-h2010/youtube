@@ -1,0 +1,115 @@
+    <div class="col-md-12" style="margin: auto;">
+        <div class="col-12">
+            <h1>Chuyên mục</h1>  
+        </div>
+
+        <div class="col-12">
+            <a href="/admin/tags/add" class="btn btn-primary add-row">
+                <i class="bi bi-plus-lg"></i>
+                Thêm mới
+            </a>
+            <div class="search add-row mx-3">
+                <div class="input-group mb-3">
+                    <input type="text" id="inputSearch" onkeyup="mySearch()" class="form-control" placeholder="Enter keys..." aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            {{!-- Alert message --}}
+            {{#if message}}
+                <div class="alert alert-{{status}} alert-dismissible fade show col-4" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {{/if}}
+        </div>
+
+    <div style="overflow: scroll; width: 100%; height: 70vh; position: sticky;">
+        <table id="myTable" class="table table-striped" >
+            <thead style="position: sticky;">
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Meta</th>
+                    <th scope="col">Hiển thị</th>
+                    <th scope="col">Thứ tự</th>
+                    <th scope="col" width="15%">#</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each tags}}
+                    <tr>
+                        <th scope="row">{{inc @index}}</th>
+                        <td>{{this.name}}</td>
+                        <td>{{this.meta}}</td>
+                        <td>{{this._hide}}</td>
+                        <td>{{this.order}}</td>
+                        <td>
+                            <a href="/admin/tags/{{this.id}}/edit" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+                            <a href="#" data-id="{{this.id}}" class="btn btn-danger btn-delete" data-toggle="modal" data-target="#deleteModal"><i class="bi bi-trash-fill"></i></a>
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+    {{!-- Delete Modal --}}
+    <div class="modal fade" id="deleteModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa chuyên mục</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn muốn xóa chuyên mục <strong class="delete-name"></strong> không?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger btn-confirm-delete">Xóa</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <form action="" id="m-form"></form>
+    </div>
+
+
+<script>
+    console.log("Quan ly chuyên mục")
+
+    const actionDeleteUser = "/admin/tags"
+    let _form = $("#m-form")
+
+    setTimeout(function() {
+        $(".alert").hide();
+    }, 2500)
+
+    $(".btn-delete").click(function(){
+        var del_id = $(this).attr("data-id")
+        console.log("del user id: " + del_id)
+
+        // Get name delete
+        var name = $(this).parent().parent().children()[1].innerText
+
+        console.log(name)
+
+        $(".delete-name").html(name)
+ 
+        //send form to delete
+        var urlDelete = actionDeleteUser + "/" + del_id + "/delete"
+
+        _form.attr("method", "GET")
+        _form.attr("action", urlDelete)
+
+        $(".btn-confirm-delete").click(function(){
+            _form.submit()
+        })
+    })
+
+</script>
